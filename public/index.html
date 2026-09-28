@@ -219,7 +219,7 @@ if(!u||!e){o.textContent="Isi link video dan endpoint API dulu.";return}
 o.textContent="Memproses...";
 try{const r=await fetch(e,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({platform:$("dp").value==="auto"?(dtc(u)||"Lainnya"):$("dp").value,format:$("dfm").value,url:u})});
 const d=await r.json();
-if(d.download_url){o.innerHTML="";const a=document.createElement("a");a.href=d.download_url;a.textContent="Klik untuk mengunduh";a.target="_blank";a.rel="noopener";o.appendChild(a)}else o.textContent="API tidak mengembalikan download_url."}
+if(d.download_url){o.innerHTML="";const a=document.createElement("a");a.href=d.download_url;a.textContent="Klik untuk mengunduh";a.target="_blank";a.rel="noopener";o.appendChild(a)}else o.textContent=d.error||"API tidak mengembalikan download_url."}
 catch(err){o.textContent="Gagal terhubung ke endpoint (cek URL / CORS / hosting)."}
 };
 
