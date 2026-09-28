@@ -56,7 +56,11 @@ app.post("/api/dl", (req, res) => {
 
   busy++;
   const id = crypto.randomBytes(8).toString("hex");
-  const args = ["--no-playlist", "--no-warnings", "--max-filesize", "80M", "-o", path.join(DIR, id + ".%(ext)s")];
+  const args = [
+  "--no-playlist", "--no-warnings", "--max-filesize", "80M",
+  "--cookies", path.join(__dirname, "www.youtube.com_cookies.txt"),
+  "-o", path.join(DIR, id + ".%(ext)s")
+];
 
   if (format === "audio") {
     args.push("-x", "--audio-format", "mp3");
