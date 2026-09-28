@@ -12,7 +12,7 @@ COPY package.json ./
 RUN npm install --omit=dev
 COPY server.js ./
 COPY public ./public
-
+COPY www.youtube.com_cookies.txt ./www.youtube.com_cookies.txt
 ENV PORT=8080
 EXPOSE 8080
 CMD ["node", "server.js"]
