@@ -15,4 +15,9 @@ COPY public ./public
 COPY www.youtube.com_cookies.txt ./www.youtube.com_cookies.txt
 ENV PORT=8080
 EXPOSE 8080
-CMD ["node", "server.js"]
+RUN echo '#!/bin/sh\n\
+yt-dlp -U 2>/dev/null || pip3 install -U --break-system-packages yt-dlp 2>/dev/null\n\
+exec node server.js' > /start.sh \
+ && chmod +x /start.sh
+
+CMD ["/start.sh"]
