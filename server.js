@@ -41,7 +41,7 @@ function limited(ip) {
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/health", (_, res) => res.json({ ok: true, name: "ZamXTools backend" }));
 
-app.post("/download", (req, res) => {
+app.post("/api/dl", (req, res) => {
   const { url, format = "video" } = req.body || {};
 
   let u;
