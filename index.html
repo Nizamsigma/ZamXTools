@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZamXTools — Kumpulan Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09040f;--tx:#f7effd;--mut:#a995c2;--bd:rgba(190,100,255,.25);--red:#ff2e63;--pur:#8b3dff;--grad:linear-gradient(135deg,#ff2e63,#8b3dff);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;color:var(--tx);font-family:"Outfit",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(190,100,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(190,100,255,.07) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 25%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 0%,#000 25%,transparent 75%)}
+body::after{content:"";position:fixed;inset:-20%;z-index:0;pointer-events:none;background:radial-gradient(circle at 20% 30%,rgba(255,46,99,.24),transparent 40%),radial-gradient(circle at 80% 20%,rgba(139,61,255,.3),transparent 42%),radial-gradient(circle at 60% 88%,rgba(255,46,99,.15),transparent 40%);filter:blur(24px);animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(4%,3%) scale(1.12) rotate(4deg)}}
+#bgc{position:fixed;inset:0;width:100%;height:100%;margin:0;border:0;border-radius:0;z-index:1;pointer-events:none}
+.spot{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(420px circle at var(--mx,50%) var(--my,15%),rgba(255,46,99,.14),transparent 60%)}
+.w{position:relative;z-index:2;max-width:860px;margin:0 auto;padding:30px 16px 50px}
+.brand{display:flex;align-items:center;gap:18px;margin-bottom:12px}
+.logo{width:68px;height:68px;flex:none;border-radius:20px;background:var(--grad);display:grid;place-items:center;font-family:Syne,sans-serif;font-size:32px;font-weight:800;color:#fff;cursor:pointer;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:cover}
+h1{margin:0;font-family:Syne,"Outfit",sans-serif;font-size:clamp(32px,7vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.05;background:linear-gradient(90deg,#ff5c84,#b57bff,#ff5c84);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.sub{color:var(--mut);margin:6px 0 0;font-size:15px}
+.hint{font-size:11.5px;color:var(--mut);opacity:.65;margin:0 0 10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips span{font-size:12px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--bd);color:#e8d8f8}
+.search{margin-top:18px;padding:13px 16px;border-radius:14px}
+nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin:14px 0 22px}
+nav button{text-align:left;display:flex;flex-direction:column;gap:3px;padding:14px;border-radius:18px;border:1px solid var(--bd);background:rgba(255,255,255,.035);color:var(--tx);cursor:pointer;font:inherit;transition:.25s}
+nav button .ic{font-size:26px;margin-bottom:4px;filter:drop-shadow(0 0 8px rgba(255,46,99,.7))}
+nav button b{font-size:14px;font-weight:600}
+nav button small{font-size:11.5px;color:var(--mut);line-height:1.35}
+nav button:hover{transform:translateY(-3px);border-color:var(--red);background:rgba(255,46,99,.09)}
+nav button.on{background:linear-gradient(135deg,rgba(255,46,99,.3),rgba(139,61,255,.32));border-color:var(--pur);box-shadow:0 12px 36px rgba(139,61,255,.38)}
+nav button.hide{display:none}
+.card{border:1px solid transparent;border-radius:26px;padding:24px;background:linear-gradient(rgba(20,9,34,.93),rgba(20,9,34,.93)) padding-box,linear-gradient(135deg,#ff2e63,#8b3dff 50%,#ff2e63) border-box;box-shadow:0 24px 70px rgba(0,0,0,.55),0 0 50px rgba(139,61,255,.15)}
+.tool{display:none}.tool.on{display:block;animation:in .4s ease}
+@keyframes in{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+label{display:block;font-size:12.5px;color:var(--mut);margin:14px 0 6px;letter-spacing:.4px}
+input,textarea,select{width:100%;padding:11px 13px;border:1px solid var(--bd);border-radius:12px;background:rgba(9,3,16,.7);color:var(--tx);font:inherit;outline:none;transition:.2s}
+input:focus,textarea:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,46,99,.22),0 0 20px rgba(255,46,99,.15)}
+input[type=color]{padding:3px;cursor:pointer}
+input[type=range]{accent-color:var(--red);padding:0}
+input[type=checkbox]{accent-color:var(--pur)}
+select option{background:#1a0d2b}
+textarea{min-height:96px;resize:vertical}
+.btn{margin-top:14px;background:var(--grad);color:#fff;border:0;padding:12px 22px;border-radius:13px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 8px 26px rgba(139,61,255,.4);transition:.2s;position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;top:0;left:-70%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:.6s}
+.btn:hover::after{left:130%}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,46,99,.45)}
+.btn:active{transform:none}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.s{background:rgba(255,255,255,.07);border:1px solid var(--bd);box-shadow:none}
+.btn.s:hover{border-color:var(--red)}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+canvas{max-width:100%;height:auto;border-radius:16px;margin-top:14px;display:block;border:1px solid var(--bd)}
+.note{font-size:12.5px;color:var(--mut);margin-top:12px;line-height:1.6}
+.note code{background:rgba(139,61,255,.22);padding:1px 6px;border-radius:6px}
+.out{margin-top:12px;word-break:break-all;font-size:14px}
+.out a{color:#ff7a9c}
+.st{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--mut)}
+.st b{font-family:Syne,sans-serif;font-size:28px;display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+footer{text-align:center;color:var(--mut);font-size:12px;margin-top:30px;opacity:.7}
+.chain{position:relative;width:96px;height:96px;flex:none;display:grid;place-items:center}
+.chain svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;filter:drop-shadow(0 0 5px rgba(255,20,70,.6)) drop-shadow(0 1px 1px #000);animation:chspin 40s linear infinite}
+@keyframes chspin{to{transform:rotate(360deg)}}
+.chain .logo{position:relative;box-shadow:0 0 0 2px #12061c,0 0 0 3.5px rgba(255,46,99,.85),0 0 26px rgba(255,46,99,.45)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<canvas id="bgc"></canvas><div class="spot"></div>
+<div class="w">
+<div class="brand"><div class="chain"><svg id="chs" viewBox="0 0 96 96" aria-hidden="true"><defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d6a8f"/><stop offset=".45" stop-color="#2b1d38"/><stop offset="1" stop-color="#07030b"/></linearGradient></defs></svg><div class="logo" id="logo" title="Klik untuk mengganti logo">Z</div></div><div><h1>ZamXTools</h1><p class="sub">Toolkit serba guna untuk kreator ✨</p></div></div>
+<p class="hint">Klik kotak logo untuk memasang logomu sendiri.</p>
+<div class="chips"><span>⚡ Cepat</span><span>🔒 Diproses di browser</span><span>🆓 Gratis</span><span>📱 Ramah HP</span></div>
+<input class="search" id="ts" placeholder="🔍 Cari tool...">
+<nav id="nav"></nav>
+
+<section class="tool card" id="brat">
+<label>Teks</label>
+<textarea id="bt">brat summer</textarea>
+<div class="row">
+<div style="flex:1"><label>Warna latar</label><select id="bc"><option value="#8ACE00">Hijau brat</option><option value="#FFFFFF">Putih</option><option value="#0000FF">Biru</option><option value="#FF69B4">Pink</option></select></div>
+<div style="flex:1"><label>Blur</label><select id="bb"><option value="2">Standar</option><option value="0">Tanpa blur</option><option value="4">Tebal</option></select></div>
+</div>
+<canvas id="bcv" width="800" height="800"></canvas>
+<button class="btn" id="bd">Unduh PNG</button>
+<div style="height:1px;background:var(--bd);margin:20px 0 4px"></div>
+<label>🎬 Brat Video — teks muncul kata demi kata</label>
+<div class="row"><div style="flex:1"><label>Kecepatan</label><select id="bv"><option value="0.25">Cepat</option><option value="0.45" selected>Sedang</option><option value="0.8">Lambat</option></select></div></div>
+<div class="row"><button class="btn" id="bvb">🎬 Buat Video</button><a class="btn s" id="bvd" style="display:none;text-decoration:none;margin-top:14px">⬇️ Unduh Video</a></div>
+<div class="note" id="bvs"></div>
+<video id="bvp" controls playsinline loop style="display:none;max-width:100%;border-radius:14px;margin-top:12px;border:1px solid var(--bd)"></video>
+</section>
+
+<section class="tool card" id="dl">
+<label>Platform</label>
+<select id="dp"><option value="auto">🔎 Deteksi otomatis</option><option>TikTok</option><option>YouTube</option><option>YouTube Shorts</option><option>Instagram</option><option>Facebook</option><option>Twitter/X</option><option>Threads</option><option>Pinterest</option><option>Snapchat</option><option>Reddit</option><option>Twitch</option><option>Vimeo</option><option>Dailymotion</option><option>Likee</option><option>CapCut</option><option>Douyin</option><option>Bilibili</option><option>Kuaishou</option><option>Telegram</option><option>LinkedIn</option><option>Tumblr</option><option>Imgur</option><option>9GAG</option><option>Spotify</option><option>SoundCloud</option><option>Google Drive</option><option>MediaFire</option><option>Lainnya</option></select>
+<label>Format</label>
+<select id="dfm"><option value="video">Video</option><option value="audio">Audio (MP3)</option><option value="image">Gambar</option></select>
+<label>Link (tempel dari platform mana saja)</label>
+<input id="du" placeholder="https://...">
+<label>Endpoint API downloader milikmu</label>
+<input id="de" value="/download">
+<button class="btn" id="dg">Ambil</button>
+<div class="out" id="dd" style="color:var(--mut)"></div>
+<div class="out" id="do"></div>
+<p class="note">Downloader butuh server backend (browser tidak bisa mengambil video langsung dari TikTok/YouTube karena pembatasan CORS). Isi endpoint milikmu yang menerima POST <code>{"platform","format","url"}</code> dan membalas <code>{"download_url":"..."}</code>. Di halaman yang di-host di sini, permintaan ke situs lain diblokir, jadi tool ini baru berfungsi kalau file ini kamu unggah ke hosting sendiri. Unduh hanya konten milikmu atau yang diizinkan penciptanya.</p>
+</section>
+
+<section class="tool card" id="img">
+<label>Pilih gambar</label>
+<input type="file" id="if" accept="image/*">
+<label>Format hasil</label>
+<select id="ifm"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select>
+<label>Lebar maksimum (px, kosongkan = asli)</label>
+<input id="iw" type="number" min="1" placeholder="1080">
+<button class="btn" id="ig">Konversi &amp; Unduh</button>
+<div class="out" id="io"></div>
+</section>
+
+<section class="tool card" id="txt">
+<label>Teks</label>
+<textarea id="tt">Halo dunia</textarea>
+<div class="st"><div><b id="sc">0</b>karakter</div><div><b id="sw">0</b>kata</div><div><b id="sl">0</b>baris</div></div>
+<div class="row" style="margin-top:8px">
+<button class="btn s" data-c="up">HURUF BESAR</button>
+<button class="btn s" data-c="lo">huruf kecil</button>
+<button class="btn s" data-c="ti">Kapital Awal</button>
+<button class="btn s" data-c="al">aLtErNaTe</button>
+<button class="btn s" data-c="rv">Balik</button>
+<button class="btn s" id="cp">Salin</button>
+</div>
+</section>
+
+<section class="tool card" id="qc">
+<label>Nama pengirim</label><input id="qn" value="ZamX">
+<label>Pesan</label><textarea id="qt">Halo, ini contoh quote chat!</textarea>
+<div class="row"><div style="flex:1"><label>Warna nama</label><input type="color" id="qk" value="#ff9f43"></div>
+<div style="flex:1"><label>Foto profil (opsional)</label><input type="file" id="qf" accept="image/*"></div></div>
+<canvas id="qcv" width="600" height="200" style="background:repeating-conic-gradient(#8883 0 25%,#0000 0 50%) 0 0/20px 20px"></canvas>
+<button class="btn" id="qd">Unduh PNG</button>
+</section>
+
+<section class="tool card" id="nm">
+<label>Jenis nama</label>
+<select id="nt"><option value="indo">Nama Indonesia</option><option value="aes">Aesthetic</option><option value="game">Nickname Gamer</option><option value="user">Username</option></select>
+<label>Kata kunci (opsional, untuk Gamer/Username)</label><input id="nk" placeholder="contoh: zam">
+<button class="btn" id="ng">Generate 10 nama</button>
+<div class="row" id="nl" style="margin-top:12px"></div>
+<p class="note">Klik nama untuk menyalin.</p>
+</section>
+
+<section class="tool card" id="qr">
+<label>Teks atau link</label><input id="qi" value="https://claude.ai">
+<button class="btn" id="qg">Buat QR</button>
+<canvas id="qrc" width="1" height="1" style="background:#fff"></canvas>
+<button class="btn s" id="qrd">Unduh PNG</button>
+</section>
+
+<section class="tool card" id="pw">
+<label>Panjang: <span id="pl">16</span></label><input type="range" id="pn" min="6" max="64" value="16">
+<div class="row" style="margin-top:8px"><label><input type="checkbox" id="p1" checked style="width:auto"> A-Z</label><label><input type="checkbox" id="p2" checked style="width:auto"> a-z</label><label><input type="checkbox" id="p3" checked style="width:auto"> 0-9</label><label><input type="checkbox" id="p4" checked style="width:auto"> Simbol</label></div>
+<input id="po" readonly style="margin-top:10px;font-family:monospace">
+<div class="row"><button class="btn" id="pg">Generate</button><button class="btn s" id="pc">Salin</button></div>
+</section>
+
+<section class="tool card" id="cl">
+<label>Pilih warna</label><input type="color" id="cp1" value="#8ace00" style="height:60px">
+<div class="out" id="co" style="font-family:monospace;line-height:1.9"></div>
+</section>
+
+<section class="tool card" id="b64">
+<label>Teks</label><textarea id="bi"></textarea>
+<div class="row"><button class="btn" id="be">Encode</button><button class="btn s" id="bdc">Decode</button></div>
+<label>Hasil</label><textarea id="bo" readonly></textarea>
+</section>
+<footer>© ZamXTools</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const tools=[["brat","💚 Brat"],["qc","💬 QC Chat"],["nm","✨ Generator Nama"],["dl","⬇️ Downloader"],["qr","🔳 QR Code"],["pw","🔐 Password"],["cl","🎨 Warna"],["b64","🧬 Base64"],["img","🖼️ Konversi Gambar"],["txt","📝 Teks"]];
+const DESC={brat:"Gambar & video teks",qc:"Bubble chat quote",nm:"Nama keren instan",dl:"Semua sosmed",qr:"QR dari link",pw:"Password kuat",cl:"HEX • RGB • HSL",b64:"Encode & decode",img:"PNG • JPG • WebP",txt:"Hitung & ubah huruf"};
+tools.forEach(([id,n])=>{const [ic,...r]=n.split(" "),b=document.createElement("button");b.dataset.id=id;
+b.innerHTML='<span class="ic">'+ic+'</span><b>'+r.join(" ")+'</b><small>'+DESC[id]+'</small>';
+b.onclick=()=>{show(id);$(id).scrollIntoView({behavior:"smooth",block:"nearest"})};$("nav").appendChild(b)});
+function show(id){document.querySelectorAll(".tool").forEach(e=>e.classList.toggle("on",e.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.id===id))}
+show("brat");
+
+// BRAT
+function brat(n){
+const S=800,c=$("bcv"),x=c.getContext("2d");
+const t=$("bt").value.toLowerCase()||" ",pad=50,mw=S-pad*2;
+const tmp=document.createElement("canvas");tmp.width=tmp.height=S;const g=tmp.getContext("2d");
+g.fillStyle=$("bc").value;g.fillRect(0,0,S,S);g.fillStyle="#000";g.textBaseline="top";
+let fs=300,lines;
+for(;fs>24;fs-=4){g.font=fs+"px 'Arial Narrow',Arial,sans-serif";lines=wrap(g,t,mw);if(lines.length*fs*1.05<=S-pad*2&&lines.every(l=>g.measureText(l).width<=mw))break}
+g.font=fs+"px 'Arial Narrow',Arial,sans-serif";
+if(n!=null){lines=wrap(g,t.split(/(?<=[ \n])/).slice(0,n).join("").trimEnd()||" ",mw)}
+lines.forEach((l,i)=>g.fillText(l,pad,pad+i*fs*1.05));
+x.clearRect(0,0,S,S);x.filter="blur("+$("bb").value+"px)";x.drawImage(tmp,0,0);x.filter="none";
+}
+function wrap(g,t,mw){const out=[];t.split("\n").forEach(p=>{let l="";p.split(" ").forEach(w=>{const n=l?l+" "+w:w;if(g.measureText(n).width>mw&&l){out.push(l);l=w}else l=n});out.push(l)});return out}
+["bt","bc","bb"].forEach(i=>$(i).oninput=()=>brat());brat();
+$("bd").onclick=()=>{const a=document.createElement("a");a.download="brat.png";a.href=$("bcv").toDataURL("image/png");a.click()};
+
+// DOWNLOADER
+
+const DM=[["tiktok.com|vt.tiktok|vm.tiktok","TikTok"],["youtube.com/shorts","YouTube Shorts"],["youtube.com|youtu.be","YouTube"],["instagram.com","Instagram"],["facebook.com|fb.watch|fb.com","Facebook"],["twitter.com|x.com|t.co","Twitter/X"],["threads.net|threads.com","Threads"],["pinterest.|pin.it","Pinterest"],["snapchat.com","Snapchat"],["reddit.com|redd.it","Reddit"],["twitch.tv","Twitch"],["vimeo.com","Vimeo"],["dailymotion.com|dai.ly","Dailymotion"],["likee.video|likee.com","Likee"],["capcut.com","CapCut"],["douyin.com","Douyin"],["bilibili.com|b23.tv","Bilibili"],["kuaishou.com","Kuaishou"],["t.me|telegram.","Telegram"],["linkedin.com","LinkedIn"],["tumblr.com","Tumblr"],["imgur.com","Imgur"],["9gag.com","9GAG"],["spotify.com","Spotify"],["soundcloud.com","SoundCloud"],["drive.google.com","Google Drive"],["mediafire.com","MediaFire"]];
+function dtc(u){u=u.toLowerCase();for(const [k,n] of DM)if(k.split("|").some(d=>u.includes(d)))return n;return null}
+$("du").oninput=()=>{const n=dtc($("du").value);$("dd").textContent=n?"Terdeteksi: "+n:"";if(n&&$("dp").value==="auto"){/* tetap auto, dikirim sesuai deteksi */}};
+$("dg").onclick=async()=>{
+const o=$("do"),u=$("du").value.trim(),e=$("de").value.trim();
+if(!u||!e){o.textContent="Isi link video dan endpoint API dulu.";return}
+o.textContent="Memproses...";
+try{const r=await fetch(e,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({platform:$("dp").value==="auto"?(dtc(u)||"Lainnya"):$("dp").value,format:$("dfm").value,url:u})});
+const d=await r.json();
+if(d.download_url){o.innerHTML="";const a=document.createElement("a");a.href=d.download_url;a.textContent="Klik untuk mengunduh";a.target="_blank";a.rel="noopener";o.appendChild(a)}else o.textContent="API tidak mengembalikan download_url."}
+catch(err){o.textContent="Gagal terhubung ke endpoint (cek URL / CORS / hosting)."}
+};
+
+// IMAGE CONVERTER
+$("ig").onclick=()=>{
+const f=$("if").files[0],o=$("io");if(!f){o.textContent="Pilih gambar dulu.";return}
+const im=new Image();im.onload=()=>{
+let w=im.width,h=im.height;const mx=+$("iw").value;
+if(mx&&w>mx){h=Math.round(h*mx/w);w=mx}
+const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");
+const m=$("ifm").value;if(m==="image/jpeg"){x.fillStyle="#fff";x.fillRect(0,0,w,h)}
+x.drawImage(im,0,0,w,h);
+c.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="hasil."+m.split("/")[1].replace("jpeg","jpg");a.click();o.textContent="Selesai: "+w+"×"+h+" px, "+Math.round(b.size/1024)+" KB"},m,.92)};
+im.src=URL.createObjectURL(f)};
+
+// TEXT
+function st(){const v=$("tt").value;$("sc").textContent=v.length;$("sw").textContent=(v.trim().match(/\S+/g)||[]).length;$("sl").textContent=v?v.split("\n").length:0}
+$("tt").oninput=st;st();
+document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{
+const t=$("tt"),v=t.value,k=b.dataset.c;
+t.value=k==="up"?v.toUpperCase():k==="lo"?v.toLowerCase():k==="ti"?v.toLowerCase().replace(/(^|\s)\S/g,s=>s.toUpperCase()):k==="al"?[...v].map((c,i)=>i%2?c.toUpperCase():c.toLowerCase()).join(""):[...v].reverse().join("");st()});
+$("cp").onclick=async()=>{try{await navigator.clipboard.writeText($("tt").value);$("cp").textContent="Tersalin ✓"}catch(e){$("tt").select()}};
+
+// QC
+let av=null;
+$("qf").onchange=e=>{const f=e.target.files[0];if(!f){av=null;qc();return}const i=new Image();i.onload=()=>{av=i;qc()};i.src=URL.createObjectURL(f)};
+function qc(){
+const c=$("qcv"),x=c.getContext("2d"),fs=28,lh=38,pd=20,nm=$("qn").value||"Nama",col=$("qk").value;
+x.font=fs+"px Arial,sans-serif";
+const ln=wrap(x,$("qt").value||" ",460);
+x.font="bold "+fs+"px Arial";const nw=x.measureText(nm).width;
+x.font=fs+"px Arial";
+const tw=Math.max(nw,...ln.map(l=>x.measureText(l).width)),bw=tw+pd*2,bh=ln.length*lh+pd*2+36;
+c.width=110+bw+20;c.height=Math.max(bh,64)+20;
+x.fillStyle="#1f1b2e";x.beginPath();x.roundRect(100,10,bw,bh,22);x.fill();
+x.save();x.beginPath();x.arc(50,42,32,0,7);x.clip();
+if(av)x.drawImage(av,18,10,64,64);else{x.fillStyle=col;x.fillRect(18,10,64,64);x.fillStyle="#fff";x.font="bold 32px Arial";x.textAlign="center";x.textBaseline="middle";x.fillText(nm[0].toUpperCase(),50,44)}
+x.restore();x.textAlign="left";x.textBaseline="top";
+x.fillStyle=col;x.font="bold "+fs+"px Arial";x.fillText(nm,100+pd,10+pd);
+x.fillStyle="#fff";x.font=fs+"px Arial";ln.forEach((l,i)=>x.fillText(l,100+pd,10+pd+38+i*lh));
+}
+["qn","qt","qk"].forEach(i=>$(i).oninput=qc);qc();
+$("qd").onclick=()=>{const a=document.createElement("a");a.download="qc.png";a.href=$("qcv").toDataURL();a.click()};
+
+// NAME GEN
+const R=a=>a[Math.random()*a.length|0];
+const W1=["Aditya","Rizky","Farhan","Bagas","Raka","Dimas","Arka","Zidan","Alvaro","Naufal","Kirana","Aluna","Nayla","Zahra","Aisyah","Salsa","Keisha","Nadira","Alesha","Aurel"];
+const W2=["Pratama","Saputra","Ramadhan","Wijaya","Kusuma","Nugraha","Permata","Maharani","Putri","Santoso","Firmansyah","Anggara","Lestari","Hidayat"];
+const AE=["Luna","Aurora","Seraphine","Celeste","Eira","Nova","Elara","Zephyr","Lyra","Ophelia","Astra","Solene","Indigo","Wren","Kairo","Eden"];
+const AE2=["Moon","Bloom","Whisper","Velvet","Dawn","Starlight","Haven","Ember","Mist","Aster"];
+const GP=["Dark","Neo","Alpha","Shadow","Xtreme","Pro","Ultra","King","Cyber","Toxic"];
+const GS=["X","YT","Gaming","ID","77","Zone","Official","Ez"];
+const GW=["Wolf","Ghost","Blaze","Ninja","Viper","Titan","Falcon","Reaper"];
+const gen={indo:()=>R(W1)+" "+R(W2),aes:()=>R(AE)+" "+R(AE2),
+game:k=>R(GP)+(k||R(GW))+R(GS),
+user:k=>((k||R(AE))+R(["_","."])+R(GW)+(Math.random()*99|0)).toLowerCase()};
+$("ng").onclick=()=>{const l=$("nl");l.innerHTML="";const k=$("nk").value.trim().replace(/\s+/g,"");
+for(let i=0;i<10;i++){const b=document.createElement("button");b.className="btn s";b.style.margin="0";b.textContent=gen[$("nt").value](k);
+b.onclick=async()=>{try{await navigator.clipboard.writeText(b.textContent);b.textContent+=" ✓"}catch(e){}};l.appendChild(b)}};
+$("ng").click();
+
+// QR
+function qrm(){const v=$("qi").value;if(!v)return;const q=qrcode(0,"M");q.addData(v);q.make();
+const n=q.getModuleCount(),z=10,m=20,c=$("qrc"),x=c.getContext("2d");c.width=c.height=n*z+m*2;
+x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.fillStyle="#000";
+for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect(m+k*z,m+r*z,z,z)}
+$("qg").onclick=qrm;
+$("qrd").onclick=()=>{const a=document.createElement("a");a.download="qr.png";a.href=$("qrc").toDataURL();a.click()};
+window.addEventListener("load",qrm);
+
+// PASSWORD
+$("pn").oninput=()=>$("pl").textContent=$("pn").value;
+function pwg(){const sets=[["p1","ABCDEFGHIJKLMNOPQRSTUVWXYZ"],["p2","abcdefghijklmnopqrstuvwxyz"],["p3","0123456789"],["p4","!@#$%^&*()-_=+[]{};:,.?"]];
+const ch=sets.filter(a=>$(a[0]).checked).map(a=>a[1]).join("");if(!ch){$("po").value="Pilih minimal satu opsi";return}
+const n=+$("pn").value,u=new Uint32Array(n);crypto.getRandomValues(u);$("po").value=[...u].map(v=>ch[v%ch.length]).join("")}
+$("pg").onclick=pwg;pwg();
+$("pc").onclick=async()=>{try{await navigator.clipboard.writeText($("po").value);$("pc").textContent="Tersalin ✓"}catch(e){$("po").select()}};
+
+// COLOR
+function col(){const h=$("cp1").value,r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);
+const a=r/255,d=g/255,e=b/255,mx=Math.max(a,d,e),mn=Math.min(a,d,e),l=(mx+mn)/2,df=mx-mn;
+let H=0,S=0;if(df){S=df/(1-Math.abs(2*l-1));H=mx===a?((d-e)/df)%6:mx===d?(e-a)/df+2:(a-d)/df+4;H=Math.round(H*60);if(H<0)H+=360}
+$("co").textContent="HEX  "+h.toUpperCase()+"\nRGB  "+r+", "+g+", "+b+"\nHSL  "+H+", "+Math.round(S*100)+"%, "+Math.round(l*100)+"%";$("co").style.whiteSpace="pre"}
+$("cp1").oninput=col;col();
+
+// BASE64
+$("be").onclick=()=>{try{$("bo").value=btoa(unescape(encodeURIComponent($("bi").value)))}catch(e){$("bo").value="Gagal encode"}};
+$("bdc").onclick=()=>{try{$("bo").value=decodeURIComponent(escape(atob($("bi").value.trim())))}catch(e){$("bo").value="Base64 tidak valid"}};
+
+// LOGO — isi LOGO_URL dengan link/data URI logomu, atau klik kotak logo untuk upload
+const LOGO_URL="";
+function setLogo(u){const l=$("logo");l.innerHTML="";if(u){const i=document.createElement("img");i.src=u;i.alt="ZamXTools";l.appendChild(i);l.style.background="transparent"}}
+let sv="";try{sv=localStorage.getItem("zx_logo")||""}catch(e){}
+setLogo(LOGO_URL||sv);
+$("logo").onclick=()=>{const f=document.createElement("input");f.type="file";f.accept="image/*";f.onchange=()=>{const r=new FileReader();r.onload=()=>{setLogo(r.result);try{localStorage.setItem("zx_logo",r.result)}catch(e){}};r.readAsDataURL(f.files[0])};f.click()};
+
+// BRAT VIDEO
+$("bvb").onclick=async()=>{
+const S=$("bvs");
+if(!window.MediaRecorder||!$("bcv").captureStream){S.textContent="Browser ini belum mendukung perekaman video. Coba Chrome atau Edge.";return}
+const c=$("bcv"),words=($("bt").value||" ").split(/(?<=[ \n])/).length,step=+$("bv").value*1000;
+const mime=["video/mp4","video/webm;codecs=vp9","video/webm"].find(m=>MediaRecorder.isTypeSupported(m));
+const rec=new MediaRecorder(c.captureStream(30),mime?{mimeType:mime}:undefined),ch=[];
+rec.ondataavailable=e=>{if(e.data.size)ch.push(e.data)};
+rec.onstop=()=>{const type=rec.mimeType||mime||"video/webm",u=URL.createObjectURL(new Blob(ch,{type}));
+const v=$("bvp");v.src=u;v.style.display="block";v.play().catch(()=>{});
+const a=$("bvd");a.href=u;a.download="brat."+(type.includes("mp4")?"mp4":"webm");a.style.display="inline-block";
+S.textContent="Selesai ✓ Video siap diunduh.";brat();$("bvb").disabled=false};
+$("bvb").disabled=true;S.textContent="Merekam video...";
+rec.start();
+for(let i=1;i<=words;i++){brat(i);await new Promise(r=>setTimeout(r,step))}
+await new Promise(r=>setTimeout(r,1200));rec.stop()};
+
+// CHAIN BORDER — gothic
+(function(){const svg=$("chs"),ns="http://www.w3.org/2000/svg",mk=(t,a)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const P=mk("path",{d:"M34 7H62A27 27 0 0 1 89 34V62A27 27 0 0 1 62 89H34A27 27 0 0 1 7 62V34A27 27 0 0 1 34 7Z"});
+const L=P.getTotalLength(),N=28,red="#ff2e63";
+for(let i=0;i<N;i++){const t=i/N*L,p=P.getPointAtLength(t),q=P.getPointAtLength((t+1)%L),a=Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI;
+const g=mk("g",{transform:"translate("+p.x+" "+p.y+") rotate("+a+")"});
+if(i%2===0){
+g.appendChild(mk("path",{d:"M-8.5 0Q0 -7 8.5 0Q0 7 -8.5 0Z",fill:"none",stroke:"url(#cg)","stroke-width":3.4,"stroke-linejoin":"miter"}));
+g.appendChild(mk("path",{d:"M-8.5 0Q0 -7 8.5 0Q0 7 -8.5 0Z",fill:"none",stroke:red,"stroke-width":.7,opacity:.85}));
+}else{
+if(i%4===1)g.appendChild(mk("path",{d:"M-2.2 -2L0 -8.5L2.2 -2Z",fill:"url(#cg)",stroke:red,"stroke-width":.6}));
+g.appendChild(mk("path",{d:"M-6.5 0L-2.4 -2.6H2.4L6.5 0L2.4 2.6H-2.4Z",fill:"url(#cg)",stroke:red,"stroke-width":.7}));
+}
+svg.appendChild(g)}})();
+
+// THEME FX
+(function(){const c=$("bgc"),x=c.getContext("2d"),ps=[];let W,H;
+const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight};rs();addEventListener("resize",rs);
+for(let i=0;i<70;i++)ps.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.4,v:Math.random()*.5+.15,d:Math.random()*2-1,c:Math.random()<.5?"255,46,99":"170,110,255",a:Math.random()*.6+.2});
+function f(){x.clearRect(0,0,W,H);for(const p of ps){p.y-=p.v;p.x+=Math.sin(p.y/60+p.d)*.3;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}
+x.beginPath();x.fillStyle="rgba("+p.c+","+p.a+")";x.shadowColor="rgb("+p.c+")";x.shadowBlur=8;x.arc(p.x,p.y,p.r,0,7);x.fill()}
+if(!matchMedia("(prefers-reduced-motion:reduce)").matches)requestAnimationFrame(f)}
+f();
+addEventListener("pointermove",e=>{const d=document.documentElement.style;d.setProperty("--mx",e.clientX+"px");d.setProperty("--my",e.clientY+"px")});
+$("ts").oninput=()=>{const q=$("ts").value.toLowerCase();document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("hide",!b.textContent.toLowerCase().includes(q)))}})();
+</script>
+</body>
+</html>
